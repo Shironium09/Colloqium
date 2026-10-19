@@ -48,7 +48,8 @@ npm run preview
 
 Exchange rate conversions provided by [ExchangeRate-API](https://www.exchangerate-api.com) in compliance with their free terms.
 
-# Credits
+## Credits
 
-Backend and Scraper - Joenell de Pedro
-Frontend - Dustin Jesse Balansag
+- Backend and Scraper - Joenell de Pedro
+
+- Frontend - Dustin Jesse Balansag
