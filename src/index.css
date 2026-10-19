@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #F5F0E8;
+  --color-cream-warm: #EDE7DC;
+  --color-surface-light: #FDFBF7;
+  --color-surface-light-hover: #FAF6EF;
+
+  --color-obsidian: #18181A;
+  --color-surface-dark: #222225;
+  --color-surface-dark-hover: #2A2A2E;
+
+  --color-terracotta: #D97757;
+  --color-terracotta-hover: #C46A4C;
+  --color-terracotta-muted: rgba(217, 119, 87, 0.10);
+  --color-terracotta-border: rgba(217, 119, 87, 0.30);
+
+  --color-border-light: #E2DCD2;
+  --color-border-dark: #2E2E32;
+
+  --color-text-primary-light: #1C1917;
+  --color-text-secondary-light: #57534E;
+  --color-text-muted-light: #A8A29E;
+  --color-text-primary-dark: #F5F2EB;
+  --color-text-secondary-dark: #B8B4AD;
+  --color-text-muted-dark: #827E76;
+
+  --color-sage: #4E7D63;
+  --color-sage-bg: rgba(78, 125, 99, 0.10);
+  --color-amber: #B45309;
+  --color-amber-bg: rgba(180, 83, 9, 0.10);
+  --color-slate-badge-bg: rgba(107, 114, 128, 0.08);
+
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+}
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+input, select, textarea, button, option, optgroup {
+  font-family: var(--font-sans);
+}
+
+
+:root {
+  --bg: var(--color-cream);
+  --surface: var(--color-surface-light);
+  --surface-hover: var(--color-surface-light-hover);
+  --border: var(--color-border-light);
+  --text-primary: var(--color-text-primary-light);
+  --text-secondary: var(--color-text-secondary-light);
+  --text-muted: var(--color-text-muted-light);
+}
+
+[data-theme="dark"] {
+  --bg: var(--color-obsidian);
+  --surface: var(--color-surface-dark);
+  --surface-hover: var(--color-surface-dark-hover);
+  --border: var(--color-border-dark);
+  --text-primary: var(--color-text-primary-dark);
+  --text-secondary: var(--color-text-secondary-dark);
+  --text-muted: var(--color-text-muted-dark);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  transition: background-color 180ms ease, color 180ms ease;
+  line-height: 1.6;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+
+*:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
