@@ -4,8 +4,24 @@
  * with built-in client-side Stale-While-Revalidate (SWR) caching.
  */
 
-const BASE_URL = import.meta.env.VITE_CONFERENCE_API_URL || 'https://conference-scraper-api.dcism.org'
-const DEFAULT_KEY = import.meta.env.VITE_CONFERENCE_API_KEY || ''
+function getBaseUrl() {
+  const envUrl = import.meta.env.VITE_CONFERENCE_API_URL
+  // If explicitly configured to a relative proxy path, respect it
+  if (envUrl && envUrl.startsWith('/')) return envUrl
+  // In browser on deployed host (such as Vercel), route through /api-proxy to bypass CORS
+  if (
+    typeof window !== 'undefined' &&
+    window.location.hostname !== 'localhost' &&
+    window.location.hostname !== '127.0.0.1'
+  ) {
+    return '/api-proxy'
+  }
+  return envUrl || 'https://conference-scraper-api.dcism.org'
+}
+
+const BASE_URL = getBaseUrl()
+const DEFAULT_KEY =
+  import.meta.env.VITE_CONFERENCE_API_KEY || 'n-kqgxQJ4sMq7FcCoIuutN-uqS23WCbpikAoQjZDmBo'
 
 // Cache TTL: 2 hours (per API guide suggestion to avoid stale fees)
 const CACHE_TTL_MS = 2 * 60 * 60 * 1000
