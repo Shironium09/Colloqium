@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { getConferenceFields } from '../utils/fields'
 
 function formatDateRange(s, e) {
   if (!s) return 'TBA'
@@ -90,6 +91,7 @@ export default function ConferenceCard({ conf: c, currency = 'USD', onSelect }) 
   const deadline = c.abstract_deadline || c.paper_deadline
   const deadlinePassed = isPast(deadline)
   const hasFee = !!c.standard_fee
+  const fields = getConferenceFields(c)
 
   return (
     <article
@@ -111,7 +113,7 @@ export default function ConferenceCard({ conf: c, currency = 'USD', onSelect }) 
       }}
     >
       <div>
-        <div className="flex items-center gap-2.5 mb-4 flex-wrap">
+        <div className="flex items-center gap-2 mb-4 flex-wrap">
           <span
             className="text-base sm:text-[17px] font-semibold tracking-tight"
             style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-terracotta)' }}
@@ -131,6 +133,20 @@ export default function ConferenceCard({ conf: c, currency = 'USD', onSelect }) 
               {mode}
             </span>
           )}
+
+          {fields.slice(0, 2).map((f) => (
+            <span
+              key={f.id}
+              className="text-[11px] font-medium px-2 py-0.5 rounded-md shrink-0"
+              style={{
+                backgroundColor: 'var(--surface-hover)',
+                border: '1px solid var(--border)',
+                color: 'var(--text-secondary)',
+              }}
+            >
+              {f.shortLabel}
+            </span>
+          ))}
         </div>
 
         <h3

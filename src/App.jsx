@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import ConferenceCard from './components/ConferenceCard'
 import ConferenceDetailModal from './components/ConferenceDetailModal'
+import { CS_FIELDS, getConferenceFields } from './utils/fields'
 import {
   fetchConferences,
   fetchHealth,
@@ -80,6 +81,11 @@ function FilterPanel({ open, onClose, filters, onChange, summary }) {
       key: 'continent',
       title: 'Continent',
       options: ['Asia', 'Europe', 'North America', 'South America', 'Africa', 'Oceania'],
+    },
+    {
+      key: 'field',
+      title: 'Field of Study',
+      options: CS_FIELDS.map((f) => ({ v: f.id, l: f.label })),
     },
     {
       key: 'online',
@@ -401,6 +407,7 @@ export default function App() {
   const [summary, setSummary] = useState(null)
   const EMPTY = {
     continent: ['Asia'],
+    field: [],
     online: [],
     fees: [],
     history: [],
@@ -509,6 +516,7 @@ export default function App() {
     const isCustomContinent =
       (filters.continent || []).length !== 1 || filters.continent[0] !== 'Asia'
     if (isCustomContinent) count += (filters.continent || []).length
+    count += (filters.field || []).length
     count += (filters.online || []).length
     count += (filters.fees || []).length
     count += (filters.history || []).length
@@ -532,6 +540,11 @@ export default function App() {
       }
       if (filters.continent && filters.continent.length > 0) {
         if (!filters.continent.includes(c.continent)) return false
+      }
+      if (filters.field && filters.field.length > 0) {
+        const confFields = getConferenceFields(c)
+        const hasMatch = confFields.some((f) => filters.field.includes(f.id))
+        if (!hasMatch) return false
       }
       if (filters.fees && filters.fees.length === 1) {
         const hasFee = Boolean(c.standard_fee || c.fee_min)
@@ -754,6 +767,16 @@ export default function App() {
                 : filters.continent.length === 1
                 ? filters.continent[0]
                 : `${filters.continent.length} Continents`}
+              {filters.field && filters.field.length > 0 && (
+                <>
+                  {' '}&middot;{' '}
+                  <span style={{ color: 'var(--color-terracotta)' }}>
+                    {filters.field.length === 1
+                      ? (CS_FIELDS.find((f) => f.id === filters.field[0])?.shortLabel || '1 field')
+                      : `${filters.field.length} fields`}
+                  </span>
+                </>
+              )}
             </p>
           </div>
 
